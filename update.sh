@@ -15,7 +15,7 @@ else
   SAVED_VERSION=""
 fi
 
-EXPECTED_FILE="materialgram-${LATEST_VERSION}.tar.gz"
+EXPECTED_FILE="materialgram-${LATEST_TAG}.tar.gz"
 
 ASSETS=$(echo "$LATEST_RELEASE" | grep -oP '"browser_download_url":\s*"\K[^"]+')
 
