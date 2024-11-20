@@ -1,0 +1,34 @@
+name: Materialgram RPM Builder
+
+on:
+  workflow_run:
+    workflows: ["Update Version"]
+    types:
+      - completed
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    container:
+      image: fedora:41
+      options: --volume ${{ github.workspace }}:/workspace
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install dependencies
+        run: |
+          dnf install -y git rpm-build createrepo_c curl jq tar
+
+      - name: Prepare and Build RPM
+        run: |
+          git clone https://${{ secrets.PAT }}@github.com/burhancodes/materialgram-repo.git repo
+          bash build.sh
