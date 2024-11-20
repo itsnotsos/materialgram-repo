@@ -40,7 +40,7 @@ if [ "$(git status --porcelain)" != "" ]; then
   git config --global user.name "Burhanverse"
   git config --global user.email "burhanverse@gmail.com"
   git add "$SPEC_FILE" "$VERSION_FILE"
-  git commit -m "Update to $LATEST_VERSION"
+  git commit -m "Update SPEC to $LATEST_VERSION"
 else
   echo "No changes to commit."
 fi
