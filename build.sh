@@ -3,7 +3,8 @@
 set -e
 
 REPO="kukuruzka165/materialgram"
-
+GET_VAR=$(cat version)
+export GET_VAR
 mkdir -p ~/rpmbuild/{SPECS,SOURCES,RPMS/$(arch)}
 cp *.spec ~/rpmbuild/SPECS/
 cd $GITHUB_WORKSPACE
@@ -45,5 +46,5 @@ echo "Adding and committing changes to git..."
 git config --global user.name "itsnotsos"
 git config --global user.email "179767921+itsnotsos@users.noreply.github.com"
 git add rpms
-git commit -m "Update RPM and repodata"
+git commit -m "Update RPM and repodata to v${GET_VAR}"
 git push
