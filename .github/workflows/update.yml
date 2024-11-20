@@ -28,14 +28,8 @@ jobs:
 
     container:
       image: fedora:41
-      options: --volume ${{ github.workspace }}:/workspace
 
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-
       - name: Install dependencies
         run: |
           dnf install -y git rpm-build createrepo_c curl jq tar
@@ -43,5 +37,7 @@ jobs:
       - name: Prepare and Build RPM
         run: |
           git clone https://${{ secrets.PAT }}@github.com/burhancodes/materialgram-repo.git repo
+          cd repo
+          git pull origin main
           chmod +x build.sh
           ./build.sh
