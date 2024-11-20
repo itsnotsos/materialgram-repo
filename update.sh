@@ -1,10 +1,11 @@
 #!/bin/bash
 
 VERSION_FILE="version"
-
 SPEC_FILE="materialgram.spec"
 
-LATEST_TAG=$(curl -s https://api.github.com/repos/kukuruzka165/materialgram/releases/latest | grep -oP '"tag_name":\s*"\K(v?[\d.]+)')
+LATEST_RELEASE=$(curl -s https://api.github.com/repos/kukuruzka165/materialgram/releases/latest)
+
+LATEST_TAG=$(echo "$LATEST_RELEASE" | grep -oP '"tag_name":\s*"\K(v?[\d.]+)')
 
 LATEST_VERSION=${LATEST_TAG#v}
 
@@ -12,6 +13,15 @@ if [[ -f "$VERSION_FILE" ]]; then
   SAVED_VERSION=$(<"$VERSION_FILE")
 else
   SAVED_VERSION=""
+fi
+
+EXPECTED_FILE="materialgram-${LATEST_VERSION}.tar.gz"
+
+ASSETS=$(echo "$LATEST_RELEASE" | grep -oP '"browser_download_url":\s*"\K[^"]+')
+
+if ! echo "$ASSETS" | grep -q "$EXPECTED_FILE"; then
+  echo "Error: The latest release does not contain $EXPECTED_FILE."
+  exit 1
 fi
 
 if [[ "$LATEST_VERSION" != "$SAVED_VERSION" ]]; then
@@ -29,7 +39,7 @@ fi
 if [ "$(git status --porcelain)" != "" ]; then
   git config --global user.name "Burhanverse"
   git config --global user.email "burhanverse@gmail.com"
-  git add materialgram.spec version
+  git add "$SPEC_FILE" "$VERSION_FILE"
   git commit -m "Update to $LATEST_VERSION"
 else
   echo "No changes to commit."

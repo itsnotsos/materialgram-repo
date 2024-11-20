@@ -1,6 +1,6 @@
 Name:           materialgram
-Version:        5.8.1.1
-Release:        3%{?dist}
+Version:        5.7.0.1
+Release:        1%{?dist}
 Summary:        Telegram Desktop fork with material icons and some improvements
 Vendor:         burhancodes
 Group:          Applications/Internet
