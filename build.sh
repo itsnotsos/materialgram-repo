@@ -48,5 +48,5 @@ echo "Adding and committing changes to git..."
 git config --global user.name "itsnotsos"
 git config --global user.email "179767921+itsnotsos@users.noreply.github.com"
 git add rpms
-git commit -m "Update RPM and repodata to ${LATEST_TAG}"
+git commit -m "Updated to ${LATEST_TAG}"
 git push
