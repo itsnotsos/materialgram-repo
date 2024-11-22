@@ -25,7 +25,5 @@ jobs:
           git clone https://${{ secrets.PAT }}@github.com/itsnotsos/materialgram-repo.git repo
           cd repo
           git pull origin main
-          chmod +x update.sh
-          ./update.sh
-          chmod +x build.sh
-          ./build.sh
+          chmod +x run.sh
+          ./run.sh
