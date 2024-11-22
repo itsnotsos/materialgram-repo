@@ -50,6 +50,8 @@ cp "$SPEC_FILE" ~/rpmbuild/SPECS/
 echo "Downloading the latest release tarball..."
 DOWNLOAD_URL=$(echo "$ASSETS" | grep "$EXPECTED_FILE")
 curl -L "$DOWNLOAD_URL" -o ~/rpmbuild/SOURCES/"$EXPECTED_FILE"
+tar -xzf ~/rpmbuild/SOURCES/"$EXPECTED_FILE" -C ~/rpmbuild/SOURCES
+rm -rf ~/rpmbuild/SOURCES/"$EXPECTED_FILE"
 
 echo "Building the RPM..."
 rpmbuild -ba ~/rpmbuild/SPECS/*.spec
